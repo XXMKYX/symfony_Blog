@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -32,5 +34,25 @@ class PostController extends AbstractController
             'post' => $post, //Este lo traemos como objeto con toda la info
             'custom_post' => $custom_post //Este lo traemos como arreglo con info especifica
         ]);
+    }
+
+    #[Route('insert/post', name: 'insert_post')]
+    public function insert(){
+        $post = new Post();
+        //Trayendo al usuario
+        $user = $this->em->getRepository(User::class)->find(id:1);
+        $post ->setTitle(title: 'My Inserted Post')
+            ->setDescription(description: 'Hellow My Inserted Post')
+            ->setCreationDate(new \DateTime())
+            ->setUrl(url: 'Inserter.com')
+            ->setFile(file: 'newInsertedFile.txt')
+            ->setType(type: 'Inserted')
+            ->setUser($user);
+        $this->em->persist($post);
+        //Escribiendo en DB
+        $this->em->flush();
+
+        return new JsonResponse(['success' => true]);
+
     }
 }
