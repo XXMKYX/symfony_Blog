@@ -39,6 +39,20 @@ class PostRepository extends ServiceEntityRepository
         }
     }
 
+    //Funcion para encontrar un Post por su id (Se puede decidir que datos traer)
+    public function findPost($id){
+        return $this->getEntityManager()
+            // Query personalizado
+            ->createQuery('
+                SELECT post.id, post.title
+                FROM App:Post post
+                WHERE post.id = :id
+            ')
+            ->setParameter('id', $id)
+            ->getResult();
+            //->getSingleResult();
+    }
+
 //    /**
 //     * @return Post[] Returns an array of Post objects
 //     */

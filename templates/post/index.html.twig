@@ -14,13 +14,18 @@
     <h3>{{ dump(user_name) }}</h3>
     <h3>{{ dump(cadena) }}</h3>
 
-    This friendly message is coming from:
+    <h2>My Post {{(post.id) }} from DB:</h2>
+    <h3>{{ dump(post) }}</h3>
+
+    <h2>My Post from DB by Repository:</h2>
+    <h3>{{ dump(custom_post) }}</h3>
+
+        This friendly message is coming from:
     <ul>
         <li>Your controller at <code><a href="{{ '/home/php_lab/php_proyects/symfony_Blog/src/Controller/PostController.php'|file_link(0) }}">src/Controller/PostController.php</a></code></li>
         <li>Your template at <code><a href="{{ '/home/php_lab/php_proyects/symfony_Blog/templates/post/index.html.twig'|file_link(0) }}">templates/post/index.html.twig</a></code></li>
     </ul>
 
-    <h2>My Post {{(post.id) }} from DB:</h2>
-    <h3>{{ dump(post) }}</h3>
+
 </div>
 {% endblock %}
