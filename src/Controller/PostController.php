@@ -36,23 +36,38 @@ class PostController extends AbstractController
         ]);
     }
 
-    #[Route('insert/post', name: 'insert_post')]
+    //Metodo 1: POO
+    // #[Route('insert1/post', name: 'insert_post')]
+    // public function insert(){
+    //     $post = new Post();
+    //     //Trayendo al usuario
+    //     $user = $this->em->getRepository(User::class)->find(id:1);
+    //     $post ->setTitle(title: 'My Inserted Post')
+    //         ->setDescription(description: 'Hellow My Inserted Post')
+    //         ->setCreationDate(new \DateTime())
+    //         ->setUrl(url: 'Inserter.com')
+    //         ->setFile(file: 'newInsertedFile.txt')
+    //         ->setType(type: 'Inserted')
+    //         ->setUser($user);
+    //     $this->em->persist($post);
+    //     //Escribiendo en DB
+    //     $this->em->flush();
+
+    //     return new JsonResponse(['success' => true]);
+    // }
+
+    //Metodo 1: Trayendo el Constructor del Entity
+    #[Route('insert2/post', name: 'insert_post')]
     public function insert(){
-        $post = new Post();
+        $post = new Post(title: 'My Inserted Post',type: 'Inserted',description: 'Hellow My Inserted Post', file: 'newInsertedFile.txt', url: 'Inserter.com');
         //Trayendo al usuario
         $user = $this->em->getRepository(User::class)->find(id:1);
-        $post ->setTitle(title: 'My Inserted Post')
-            ->setDescription(description: 'Hellow My Inserted Post')
-            ->setCreationDate(new \DateTime())
-            ->setUrl(url: 'Inserter.com')
-            ->setFile(file: 'newInsertedFile.txt')
-            ->setType(type: 'Inserted')
-            ->setUser($user);
+        $post->setUser($user);
+
         $this->em->persist($post);
         //Escribiendo en DB
         $this->em->flush();
 
         return new JsonResponse(['success' => true]);
-
     }
 }

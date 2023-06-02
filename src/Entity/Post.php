@@ -16,16 +16,16 @@ class Post
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'string',length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'string', length: 255)]
     private ?string $type = null;
-
-    #[ORM\Column(type: Types::TEXT)]
+    
+    #[ORM\Column(type: 'string',length: 255)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: 'string',length: 255, nullable: true)]
     private ?string $file = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -41,8 +41,14 @@ class Post
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Interaction::class)]
     private Collection $interactions;
 
-    public function __construct()
+    public function __construct($title=null, $type=null, $description=null, $file=null,$url=null)
     {
+        $this->title=$title;
+        $this->type=$type;
+        $this->description=$description;
+        $this->file=$file;
+        $this->creation_date=new \DateTime();
+        $this->url=$url;
         $this->interactions = new ArrayCollection();
     }
 
